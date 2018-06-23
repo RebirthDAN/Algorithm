@@ -1,53 +1,52 @@
 #include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <cmath>
 #include <algorithm>
 
 using namespace std;
 
-struct circles
+struct circle
 {
-    double x,y,r;
-    double left;
+    double x,y,r,left;
 }cir[100050];
-long long fn[100050];
-long long find(int i)
+
+int f[100050];
+
+int find(int i)
 {
-    if(fn[i]==i) return i;
-    return fn[i] = find(fn[i]);
+    if(f[i]==i) return i;
+    return f[i]=find(f[i]);
 }
-int cmp(struct circles a,struct circles b)
+
+int cmp(struct circle a,struct circle b)
 {
     return (a.left<b.left);
 }
-int main()
+
+main()
 {
-    long long n;
-    scanf("%lld",&n);
-    for(long long i = 0;i<n;i++)
+    int N,count,x2,x1;
+    cin>>N;count=N;
+    for(int i=0;i<N;i++)
     {
-        scanf("%lf%lf%lf",&cir[i].x,&cir[i].y,&cir[i].r);
-        cir[i].left = cir[i].x-cir[i].r;
-        fn[i] = i;
+        cin>>cir[i].x>>cir[i].y>>cir[i].r;
+        cir[i].left=cir[i].x-cir[i].r;
+        f[i]=i;
     }
-    long long count = n;
-    sort(cir,cir+n,cmp);
-    for(long long k = 0;k<n;k++)
+    sort(cir,cir+N,cmp);
+    for(int i=0;i<N;i++)
     {
-        long long tk = k+1;
-        while(cir[tk].left<cir[k].x+cir[k].r&&tk<n)
+        int j=i+1;
+        while(cir[i].x+cir[i].r>cir[j].left&&j<N)
         {
-            if(((cir[k].x-cir[tk].x)*(cir[k].x-cir[tk].x)+(cir[k].y-cir[tk].y)*(cir[k].y-cir[tk].y))<((cir[k].r+cir[tk].r)*(cir[k].r+cir[tk].r)))
+            if((cir[i].x-cir[j].x)*(cir[i].x-cir[j].x)+(cir[i].y-cir[j].y)*(cir[i].y-cir[j].y)<(cir[i].r+cir[j].r)*(cir[i].r+cir[j].r))
             {
-                long long l = find(k),r = find(tk);
-                if(fn[l]!=r) count--;
-                fn[l] = r;
+                x1=find(i);x2=find(j);
+                if(x1!=x2)count--;
+                f[x2]=x1;
             }
-            tk++;
+            j++;
         }
     }
-    printf("%lld\n",count);
+    cout<<count<<endl;
 }
 /* 万湖之国的形成
 时间限制:2500MS  内存限制:65535K
@@ -58,7 +57,7 @@ Description
 N国原是一块平原上，没有湖，直到一颗小行星撞入大气层碎成成千上万的碎片，碎片再撞击地面形成
 一个一个的坑， 下雨之后，最终形成万湖之国。
 现在科学家想用计算机模拟万湖之国形成过程，假设每一块碎片撞击地面，都撞出一个园形坑，现在知道
-每一个碎片造成的坑的圆心和半径，问每个坑都注满水后，最终形成多少个湖？
+每一个碎片造成的坑的圆心和半径，问每个坑都注满水后，最终形成多少个湖？(相切不算同一个湖）
 
 
 

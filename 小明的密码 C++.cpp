@@ -1,41 +1,40 @@
 #include <iostream>
-#include <stdio.h>
 
 using namespace std;
 
-int p[]={0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0};
-int count;
+int count=0;
+int p[]={0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0};
 
-void dfs(int n,int A[],int cur,int m)
+int dfs(int a[],int cur,int n,int m)
 {
-    int i;
     if(cur==n) count++;
-    else for(i=0;i<10;i++)
+    else
     {
-        int ok=1,j,tmp,sum=0;
-        for(j=cur-m+1;j<cur&&j>=0;j++)
+        for(int i=0;i<10;i++)
         {
-            sum+=A[j];
-        }
-        sum+=i;
-        if(p[sum]==1||cur-m+1<0)
-        {
-            A[cur]=i;
-            dfs(n,A,cur+1,m);
+            int sum=0;
+            for(int j=cur-m+1;j<cur&&j>=0;j++)sum+=a[j];
+            sum+=i;
+            if(p[sum]==1||cur<m-1)
+            {
+                a[cur]=i;
+                dfs(a,cur+1,n,m);
+            }
         }
     }
+    return 0;
 }
 
-int main()
+main()
 {
-    int T,N,M,a[12];
+    int a[13],N,M,T;
     cin>>T;
     while(T--)
     {
-        count=0;
         cin>>N>>M;
-        dfs(N,a,0,M);
+        dfs(a,0,N,M);
         cout<<count<<endl;
+        count=0;
     }
 }
 /*18025 小明的密码

@@ -8,9 +8,9 @@ using namespace std;
 struct mark
 {
     char name[50];
-    int ac = 0;
-    int ftime = 0;
-    int q[15] = {0};
+    int ac;
+    int ftime;
+    int q[15];
 };
 
 vector<struct mark> marks;
@@ -33,6 +33,7 @@ main()
         {
             struct mark tmp;
             strcpy(tmp.name, name);
+            tmp.ac=0;tmp.ftime=0;tmp.q[15]={0};
             num++;
             marks.push_back(tmp);
         }

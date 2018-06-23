@@ -1,76 +1,53 @@
 #include <iostream>
-#include<vector>
-#include<string>
-#include<cstdio>
-#include<set>
-#include<cstring>
-#include<algorithm>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+
 using namespace std;
 
-struct SCORE
+struct mark
 {
     char name[50];
-    int acnum;
-    int ifac[15];
-    int time;
+    int ac = 0;
+    int ftime = 0;
+    int q[15] = {0};
 };
 
-int cmp(struct SCORE a,struct SCORE b)
+vector<struct mark> marks;
+
+int cmp(struct mark a, struct mark b)
 {
-    if(a.acnum>b.acnum) return 1;
-    else if(a.acnum==b.acnum && a.time<b.time)
-        return 1;
-    else if(a.acnum==b.acnum && a.time==b.time && strcmp(a.name,b.name)<0)
-        return 1;
-    else
-        return 0;
+    return ((a.ac > b.ac) || (a.ac == b.ac && a.ftime < b.ftime) || (a.ac == b.ac && a.ftime == b.ftime && strcmp(a.name, b.name) < 0));
 }
 
-vector<struct SCORE> scores;
-
-int main()
+main()
 {
-    //freopen("data.txt","r",stdin);
-    int time,count=0,i,k;
-    char name[50];
-    char question;
-    int result;
-    while(scanf("%d %s %c %d",&time,name,&question,&result)==4)
+    char name[50], q;
+    int time, r, num = 0, i;
+    while (scanf("%d %s %c %d", &time, &name, &q, &r) == 4)
     {
-        if(time==0) break;// test
-        for(i=0;i<count;i++)
-            if(strcmp(scores[i].name,name)==0)
+        for (i = 0; i < num; i++)
+            if (strcmp(marks[i].name, name) == 0)
                 break;
-        if(i==count)
+        if (i == num)
         {
-            count++;
-            struct SCORE tmp;
-            for(k=0;k<15;k++)
-                tmp.ifac[k]=0;
-            strcpy(tmp.name,name);
-            tmp.acnum=0;
-            tmp.time=0;
-            scores.push_back(tmp);
+            struct mark tmp;
+            strcpy(tmp.name, name);
+            num++;
+            marks.push_back(tmp);
         }
-        if(scores[i].ifac[question-65]!=-1)
-            if(result==0)
-            {
-                scores[i].acnum++;
-                scores[i].time=scores[i].time+scores[i].ifac[question-65]*20+time;
-                scores[i].ifac[question-65]=-1;
-
-            }
-            else
-                scores[i].ifac[question-65]+=1;
-        //printf("%s %d %d\n",scores[i].name,scores[i].acnum,scores[i].time);
+        if (r == 0 && marks[i].q[q - 65] != -1)
+        {
+            marks[i].ftime += (marks[i].q[q - 65] * 20 + time);
+            marks[i].q[q - 65] = -1;
+            marks[i].ac++;
+        }
+        if (r != 0 && marks[i].q[q - 65] != -1)
+            marks[i].q[q - 65]++;
     }
-    sort(scores.begin(),scores.end(),cmp);
-    //printf("name  ac  time\n");
-    for(int i=0;i<count;i++)
-    {
-        if(scores[i].acnum==0) break;
-        printf("%s %d %d\n",scores[i].name,scores[i].acnum,scores[i].time);
-    }
+    sort(marks.begin(), marks.end(), cmp);
+    for (int i; i < num && marks[i].ac != 0; i++)
+        cout << marks[i].name << " " << marks[i].ac << " " << marks[i].ftime << endl;
 }
 /*每行一个评判结果，格式为：时间（第几分钟提交的）+半角空格+队名+半角空格+题号+半角空格+评判结果（0通过，其它为出错）
 题号由大写A字符开始，第2题是B，依次类推，最多不超过15题

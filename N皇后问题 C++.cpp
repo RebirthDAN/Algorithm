@@ -1,38 +1,40 @@
 #include <iostream>
-#include <cstdio>
-#define abs(x) ((x)>0?(x):-(x))
-
+#define abs(x) (x>=0?x:-(x))
 
 using namespace std;
 
-int count;
+int count=0;
 
-void dfs(int n,int A[],int cur)
+int dfs(int a[],int cur,int n)
 {
-    int i;
+    int ok;
     if(cur==n) count++;
-    else for(i=1;i<=n;i++)
+    else
     {
-        int ok=1,j;
-        for(j=0;j<cur;j++)if(A[j]==i|| abs(i-A[j])== abs(cur-j)){ok=0;break;}
-        if(ok)
+        for(int i=0;i<n;i++)
         {
-            A[cur]=i;
-            dfs(n,A,cur+1);
+            ok=1;
+            for(int j=0;j<cur;j++)if(a[j]==i||abs(i-a[j])==abs(cur-j)) ok=0;
+            if(ok)
+            {
+                a[cur]=i;
+                dfs(a,cur+1,n);
+            }
         }
     }
+    return 0;
 }
 
-int main()
+main()
 {
-    int T,N,a[13]={0};
+    int a[13],N,T;
     cin>>T;
     while(T--)
     {
-        count=0;
         cin>>N;
-        dfs(N,a,0);
+        dfs(a,0,N);
         cout<<count<<endl;
+        count=0;
     }
 }
 /*18124 N皇后问题

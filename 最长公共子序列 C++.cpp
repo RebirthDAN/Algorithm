@@ -1,27 +1,21 @@
 #include <iostream>
-#include <cstdio>
-#include <algorithm>
 #include <cstring>
-
+ 
 using namespace std;
+
 int L[1000][1000];
 
-int main()
+main()
 {
     char a[1000],b[1000];
     gets(a);gets(b);
     int lenA=strlen(a),lenB=strlen(b);
-    //a[lenA]='\0';b[lenB]='\0';
-    for(int i=0;i<lenA;i++) L[i][0]=0;
-    for(int j=0;j<lenB;j++) L[0][j]=0;
+    for(int i=0;i<lenA;i++)L[i][0]=0;
+    for(int j=0;j<lenB;j++)L[0][j]=0;
     for(int i=1;i<lenA;i++)
-    {
         for(int j=1;j<lenB;j++)
-        {
             if(a[i]==b[j])L[i][j]=L[i-1][j-1]+1;
             else L[i][j]=(L[i-1][j]>L[i][j-1]?L[i-1][j]:L[i][j-1]);
-        }
-    }
     cout<<L[lenA-1][lenB-1]+1<<endl;
 }
 /*最长公共子序列

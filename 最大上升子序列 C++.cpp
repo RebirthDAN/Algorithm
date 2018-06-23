@@ -1,22 +1,17 @@
 #include <iostream>
-#include <cstdio>
 #include <algorithm>
 
 using namespace std;
 
-int main()
+main()
 {
-    int N,a[1000],i=0,LIS[1000];
+    int N,a[1000],LIS[1000]={1},max;
     cin>>N;
-    for(i=0;i<N;i++) cin>>a[i];
-    LIS[0]=1;
-    for(i=1;i<N;i++)
+    for(int i=0;i<N;i++)
     {
-        int max=1;
-        for(int j=0;j<i;j++)
-        {
-            if(a[i]>a[j]&&max<LIS[j]+1)max=LIS[j]+1;
-        }
+        cin>>a[i];
+        max=1;
+        for(int j=0;j<i;j++) if(a[i]>a[j]&&max<LIS[j]+1)max=LIS[j]+1;
         LIS[i]=max;
     }
     cout<<*max_element(LIS,LIS+N)<<endl;

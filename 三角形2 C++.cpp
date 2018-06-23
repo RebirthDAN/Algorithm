@@ -1,18 +1,17 @@
 #include <iostream>
-#include <stdio.h>
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 
-int main()
+main()
 {
-    int n,r,a,i;
+    int n,r,a;
     double b,c;
-    scanf("%d",&n);
+    cin>>n;
     while(n--)
     {
-        scanf("%d",&r);
-        for(i=1;;i++)
+        cin>>r;
+        for(int i=1;;i++)
         {
             a=2*r+i;
             b=((2*r*r-2*r*a)*1.0)/((2*r-a)*1.0);
@@ -20,11 +19,10 @@ int main()
             if(b!=(int)b) continue;
             c=sqrt(a*a+b*b);
             if(c!=(int)c) continue;
-            printf("%d,%d,%d\n",a,(int)b,(int)c);
+            cout<<a<<","<<b<<","<<c<<endl;
         }
-        if(n)printf("\n");
+        if(n) cout<<endl;
     }
-    return 0;
 }
 /*三角形2
 时间限制:1000MS  内存限制:65535K

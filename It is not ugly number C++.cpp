@@ -1,40 +1,37 @@
 #include <iostream>
+#include <set>
 #include <vector>
 #include <queue>
-#include <set>
-#include <cstdio>
 
 using namespace std;
-priority_queue<long, vector<long long>, greater<long long> > un;
+priority_queue<long long,vector<long long>,greater<long long> >q;
 
-
-int main()
+main()
 {
-    long long T,n,i,i1=0,tmp,x,x2,a[5000];
-    scanf("%lld",&T);
-    set<long long> s;
-    un.push(1);
-    for(i=1;i<=1500;i++)
+    long long a[2500],x,x2,T;
+    set<long long>s;
+    q.push(1);
+    for(int i=0;i<1500;i++)
     {
-        x=un.top();un.pop();
-        a[i1++]=x;
+        x=q.top();q.pop();
+        a[i]=x;
         x2=x*2;
-        if(!s.count(x2)){s.insert(x2);un.push(x2);}
+        if(!s.count(x2)){s.insert(x2);q.push(x2);}
         x2=x*3;
-        if(!s.count(x2)){s.insert(x2);un.push(x2);}
+        if(!s.count(x2)){s.insert(x2);q.push(x2);}
         x2=x*5;
-        if(!s.count(x2)){s.insert(x2);un.push(x2);}
+        if(!s.count(x2)){s.insert(x2);q.push(x2);}
     }
+    cin>>T;
     while(T--)
     {
-        tmp=0;
-        scanf("%lld",&n);
-        for(i=1;i<=1500;i++)
+        cin>>x;
+        for(int i=1,x2=0;i<1500;i++)
         {
-            tmp+=a[i]-a[i-1]-1;
-            if(tmp>=n){i1=a[i]-(tmp-n)-1;break;}
+            x2+=a[i]-a[i-1]-1;
+            if(x2>=x){x=a[i]-1-(x2-x);break;}
         }
-        cout<<i1<<endl;
+        cout<<x<<endl;
     }
 }
 /*

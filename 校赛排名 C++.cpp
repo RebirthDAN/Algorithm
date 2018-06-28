@@ -33,7 +33,7 @@ main()
         {
             struct mark tmp;
             strcpy(tmp.name, name);
-            tmp.ac=0;tmp.ftime=0;tmp.q[15]={0};
+            tmp.ac=0;tmp.ftime=0;for(int x=0;x<15;x++)tmp.q[x]=0;
             num++;
             marks.push_back(tmp);
         }
@@ -47,7 +47,7 @@ main()
             marks[i].q[q - 65]++;
     }
     sort(marks.begin(), marks.end(), cmp);
-    for (int i; i < num && marks[i].ac != 0; i++)
+    for (int i=0; i < num && marks[i].ac != 0; i++)
         cout << marks[i].name << " " << marks[i].ac << " " << marks[i].ftime << endl;
 }
 /*每行一个评判结果，格式为：时间（第几分钟提交的）+半角空格+队名+半角空格+题号+半角空格+评判结果（0通过，其它为出错）
